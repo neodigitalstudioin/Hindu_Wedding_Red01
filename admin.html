@@ -1,0 +1,849 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Neo Digital Studio | Wedding Invitation Manager</title>
+  <link rel="icon" type="image/png" href="assets/ganapathi.png">
+  <link rel="stylesheet" href="css/styles.css">
+  <style>
+    /* Dedicated Admin Portal Styling */
+    .admin-body {
+      background: #110206;
+      color: var(--text-ivory);
+      font-family: var(--font-body);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .admin-header {
+      background: linear-gradient(180deg, rgba(38, 7, 16, 0.95) 0%, rgba(20, 3, 8, 0.95) 100%);
+      border-bottom: 1px solid var(--gold-border);
+      padding: 18px 32px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(12px);
+    }
+
+    .admin-logo-area {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .admin-logo-img {
+      width: 42px;
+      height: 42px;
+      object-fit: contain;
+      filter: drop-shadow(0 0 10px rgba(212, 175, 55, 0.3));
+    }
+
+    .admin-brand-title {
+      font-family: var(--font-serif-sub);
+      font-size: 1.15rem;
+      letter-spacing: 0.18em;
+      color: var(--gold-light);
+      text-transform: uppercase;
+    }
+
+    .admin-brand-sub {
+      font-family: var(--font-sans);
+      font-size: 0.7rem;
+      letter-spacing: 0.15em;
+      color: var(--text-cream-muted);
+    }
+
+    .admin-nav-bar {
+      display: flex;
+      gap: 12px;
+    }
+
+    .admin-nav-link {
+      background: none;
+      border: 1px solid transparent;
+      padding: 8px 18px;
+      border-radius: 999px;
+      color: var(--text-cream-muted);
+      font-family: var(--font-serif-sub);
+      font-size: 0.78rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: var(--transition-smooth);
+    }
+
+    .admin-nav-link:hover,
+    .admin-nav-link.active {
+      color: var(--gold-light);
+      border-color: var(--gold-primary);
+      background: rgba(212, 175, 55, 0.12);
+    }
+
+    .admin-layout-container {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 40px 24px 80px;
+      width: 100%;
+      flex-grow: 1;
+    }
+
+    .admin-view-panel {
+      display: none;
+    }
+
+    .admin-view-panel.active {
+      display: block;
+      animation: fadeIn 0.4s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Metric Cards Grid */
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      gap: 22px;
+      margin-bottom: 40px;
+    }
+
+    .metric-card {
+      background: linear-gradient(155deg, rgba(54, 11, 23, 0.85) 0%, rgba(24, 4, 10, 0.95) 100%);
+      border: 1px solid var(--gold-border);
+      border-radius: 14px;
+      padding: 24px 20px;
+      text-align: center;
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5);
+    }
+
+    .metric-value {
+      font-family: var(--font-serif-sub);
+      font-size: 2.4rem;
+      font-weight: 700;
+      color: var(--gold-bright);
+      line-height: 1.1;
+    }
+
+    .metric-label {
+      font-family: var(--font-sans);
+      font-size: 0.72rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--text-cream-muted);
+      margin-top: 8px;
+    }
+
+    /* Tables */
+    .admin-table-card {
+      background: linear-gradient(155deg, rgba(48, 10, 20, 0.85) 0%, rgba(22, 4, 9, 0.95) 100%);
+      border: 1px solid var(--gold-border);
+      border-radius: 14px;
+      padding: 28px;
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.6);
+      overflow-x: auto;
+    }
+
+    .admin-table-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 22px;
+    }
+
+    .admin-table-title {
+      font-family: var(--font-serif-sub);
+      font-size: 1.15rem;
+      letter-spacing: 0.16em;
+      color: var(--gold-light);
+    }
+
+    table.admin-data-table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+    }
+
+    table.admin-data-table th {
+      padding: 14px 16px;
+      border-bottom: 1px solid rgba(212, 175, 55, 0.3);
+      font-family: var(--font-serif-sub);
+      font-size: 0.74rem;
+      letter-spacing: 0.16em;
+      color: var(--gold-primary);
+      text-transform: uppercase;
+    }
+
+    table.admin-data-table td {
+      padding: 16px;
+      border-bottom: 1px solid rgba(212, 175, 55, 0.12);
+      font-family: var(--font-body);
+      font-size: 0.95rem;
+      color: var(--text-ivory);
+      vertical-align: middle;
+    }
+
+    .badge-status {
+      display: inline-block;
+      padding: 4px 12px;
+      border-radius: 999px;
+      font-family: var(--font-sans);
+      font-size: 0.7rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      font-weight: 600;
+    }
+
+    .badge-accepted {
+      background: rgba(46, 204, 113, 0.18);
+      color: #2ecc71;
+      border: 1px solid rgba(46, 204, 113, 0.4);
+    }
+
+    .badge-declined {
+      background: rgba(231, 76, 60, 0.18);
+      color: #e74c3c;
+      border: 1px solid rgba(231, 76, 60, 0.4);
+    }
+
+    /* Template Cards Grid */
+    .templates-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 26px;
+      margin-top: 24px;
+    }
+
+    .template-card {
+      border: 1px solid var(--gold-border);
+      border-radius: 14px;
+      padding: 24px;
+      background: rgba(36, 7, 16, 0.7);
+      transition: var(--transition-smooth);
+      cursor: pointer;
+    }
+
+    .template-card:hover,
+    .template-card.selected {
+      border-color: var(--gold-primary);
+      box-shadow: var(--gold-glow);
+      transform: translateY(-4px);
+    }
+
+    .template-swatch {
+      height: 70px;
+      border-radius: 8px;
+      margin-bottom: 16px;
+      border: 1px solid rgba(212, 175, 55, 0.3);
+    }
+
+    /* Auth Modal */
+    .admin-auth-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(12, 2, 5, 0.95);
+      z-index: 5000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .admin-auth-box {
+      width: 100%;
+      max-width: 440px;
+      background: linear-gradient(155deg, #320a17 0%, #170308 100%);
+      border: 1.5px solid var(--gold-primary);
+      border-radius: 16px;
+      padding: 44px 36px;
+      text-align: center;
+      box-shadow: 0 25px 70px rgba(0, 0, 0, 0.9), var(--gold-glow);
+    }
+  </style>
+</head>
+<body class="admin-body">
+
+  <!-- ADMIN AUTHENTICATION GUARD -->
+  <div id="adminAuthOverlay" class="admin-auth-overlay">
+    <div class="admin-auth-box">
+      <img src="assets/ganapathi.png" alt="Neo Digital Studio" style="width: 70px; height: auto; margin-bottom: 16px;">
+      <h2 style="font-family: var(--font-serif-sub); font-size: 1.25rem; color: var(--gold-light); letter-spacing: 0.18em; margin-bottom: 6px;">
+        NEO DIGITAL STUDIO
+      </h2>
+      <p style="font-family: var(--font-body); font-size: 0.9rem; color: var(--text-cream-muted); margin-bottom: 24px;">
+        Wedding Invitation Management Portal
+      </p>
+
+      <div class="admin-form-group">
+        <label for="adminPinInput">ENTER MASTER PIN</label>
+        <input type="password" id="adminPinInput" class="admin-form-input" placeholder="Enter PIN (Default: neo2026)" style="text-align: center; font-size: 1.1rem; letter-spacing: 0.25em;">
+      </div>
+
+      <button id="btnAdminLogin" class="btn-event-directions" style="width: 100%; justify-content: center; padding: 13px; font-weight: 700; margin-top: 10px;">
+        AUTHENTICATE & ENTER
+      </button>
+
+      <p id="authErrorMsg" style="color: #ff6b7b; font-size: 0.82rem; margin-top: 14px; display: none;"></p>
+    </div>
+  </div>
+
+  <!-- HEADER -->
+  <header class="admin-header">
+    <div class="admin-logo-area">
+      <img src="assets/ganapathi.png" alt="Neo Digital Studio" class="admin-logo-img">
+      <div>
+        <h1 class="admin-brand-title">NEO DIGITAL STUDIO</h1>
+        <p class="admin-brand-sub">WEDDING INVITATION MANAGER</p>
+      </div>
+    </div>
+
+    <nav class="admin-nav-bar">
+      <button class="admin-nav-link active" data-view="viewOverview">Overview</button>
+      <button class="admin-nav-link" data-view="viewInvitations">Invitations</button>
+      <button class="admin-nav-link" data-view="viewCreate">Create Invitation</button>
+      <button class="admin-nav-link" data-view="viewTemplates">Templates</button>
+      <button class="admin-nav-link" data-view="viewRSVPs">RSVPs</button>
+      <button class="admin-nav-link" data-view="viewSettings">Settings</button>
+      <button id="btnAdminLogout" class="admin-nav-link" style="color: #ff6b7b; border-color: rgba(255, 107, 123, 0.3);">Logout</button>
+    </nav>
+  </header>
+
+  <!-- MAIN DASHBOARD CONTENT -->
+  <main class="admin-layout-container">
+
+    <!-- 1. OVERVIEW VIEW -->
+    <section id="viewOverview" class="admin-view-panel active">
+      <div class="metrics-grid">
+        <div class="metric-card">
+          <div id="statTotalWeddings" class="metric-value">0</div>
+          <div class="metric-label">Total Invitations</div>
+        </div>
+        <div class="metric-card">
+          <div id="statTotalViews" class="metric-value">0</div>
+          <div class="metric-label">Guest Page Views</div>
+        </div>
+        <div class="metric-card">
+          <div id="statTotalRSVPs" class="metric-value">0</div>
+          <div class="metric-label">Total RSVPs</div>
+        </div>
+        <div class="metric-card">
+          <div id="statAcceptedRSVPs" class="metric-value" style="color: #2ecc71;">0</div>
+          <div class="metric-label">Joyfully Accepted</div>
+        </div>
+        <div class="metric-card">
+          <div id="statDeclinedRSVPs" class="metric-value" style="color: #e74c3c;">0</div>
+          <div class="metric-label">Regretfully Declined</div>
+        </div>
+      </div>
+
+      <div class="admin-table-card">
+        <div class="admin-table-header">
+          <h2 class="admin-table-title">RECENT GUEST RSVPS</h2>
+          <button class="admin-small-btn" onclick="document.querySelector('[data-view=viewRSVPs]').click()">View All RSVPs →</button>
+        </div>
+        <table class="admin-data-table">
+          <thead>
+            <tr>
+              <th>Guest Name</th>
+              <th>Wedding</th>
+              <th>Status</th>
+              <th>Blessings / Message</th>
+              <th>Submitted</th>
+            </tr>
+          </thead>
+          <tbody id="overviewRecentRsvpTbody"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- 2. INVITATIONS LIST VIEW -->
+    <section id="viewInvitations" class="admin-view-panel">
+      <div class="admin-table-card">
+        <div class="admin-table-header">
+          <h2 class="admin-table-title">ALL CLIENT WEDDING INVITATIONS</h2>
+          <button class="btn-event-directions" onclick="document.querySelector('[data-view=viewCreate]').click()">+ CREATE NEW INVITATION</button>
+        </div>
+        <table class="admin-data-table">
+          <thead>
+            <tr>
+              <th>Wedding & Couple</th>
+              <th>Unique Public URL</th>
+              <th>Template</th>
+              <th>Date</th>
+              <th>Views</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="invitationsListTbody"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- 3. CREATE INVITATION WIZARD -->
+    <section id="viewCreate" class="admin-view-panel">
+      <div class="admin-table-card" style="max-width: 860px; margin: 0 auto;">
+        <h2 class="admin-table-title" style="margin-bottom: 24px;">CREATE NEW WEDDING INVITATION</h2>
+        
+        <form id="createWeddingForm">
+          <!-- Template Selection -->
+          <div class="admin-form-group">
+            <label>CHOOSE WEDDING TEMPLATE</label>
+            <select id="newWedTemplate" class="admin-form-input">
+              <option value="royal-red">Template 01: Royal Red & Deep Maroon (Default Heritage)</option>
+              <option value="floral-romance">Template 02: Floral Romance & Burgundy Rose</option>
+              <option value="kerala-traditional">Template 03: Kerala Traditional & Temple Gold</option>
+              <option value="minimal-luxury">Template 04: Minimal Luxury & Dark Velvet</option>
+              <option value="cinematic-gold">Template 05: Cinematic Royal Gold</option>
+            </select>
+          </div>
+
+          <!-- Slug / URL -->
+          <div class="admin-form-group">
+            <label>UNIQUE SLUG (Public URL Path)</label>
+            <input type="text" id="newWedSlug" class="admin-form-input" placeholder="e.g. rahul-anjali" required>
+            <small style="color: var(--gold-light); display: block; margin-top: 4px;">Public link will be: <code>index.html?wedding=YOUR-SLUG</code></small>
+          </div>
+
+          <!-- Couple Details -->
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+            <div class="admin-form-group">
+              <label>Groom Name</label>
+              <input type="text" id="newWedGroomName" class="admin-form-input" placeholder="e.g. Rahul" required>
+            </div>
+            <div class="admin-form-group">
+              <label>Bride Name</label>
+              <input type="text" id="newWedBrideName" class="admin-form-input" placeholder="e.g. Anjali" required>
+            </div>
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+            <div class="admin-form-group">
+              <label>Groom Parents</label>
+              <input type="text" id="newWedGroomParents" class="admin-form-input" placeholder="Mrs. & Mr. ...">
+            </div>
+            <div class="admin-form-group">
+              <label>Bride Parents</label>
+              <input type="text" id="newWedBrideParents" class="admin-form-input" placeholder="Mrs. & Mr. ...">
+            </div>
+          </div>
+
+          <!-- Date & Time -->
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+            <div class="admin-form-group">
+              <label>Wedding Date Display</label>
+              <input type="text" id="newWedDateDisplay" class="admin-form-input" placeholder="e.g. Saturday, November 28, 2026" required>
+            </div>
+            <div class="admin-form-group">
+              <label>Countdown ISO DateTime</label>
+              <input type="text" id="newWedDateTimeISO" class="admin-form-input" placeholder="2026-11-28T11:00:00+05:30" required>
+            </div>
+          </div>
+
+          <!-- Venue & Hashtag -->
+          <div class="admin-form-group">
+            <label>Wedding Hashtag</label>
+            <input type="text" id="newWedHashtag" class="admin-form-input" placeholder="#RahulAnjaliWedding">
+          </div>
+
+          <div class="admin-form-group">
+            <label>Primary Venue Name & City</label>
+            <input type="text" id="newWedVenue" class="admin-form-input" placeholder="e.g. The Palace Courtyard, Jaipur">
+          </div>
+
+          <!-- Options Toggles -->
+          <div style="display: flex; gap: 30px; margin: 24px 0;">
+            <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+              <input type="checkbox" id="newWedRsvpEnabled" checked style="accent-color: var(--gold-primary);">
+              <span>Enable RSVP</span>
+            </label>
+            <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+              <input type="checkbox" id="newWedMusicEnabled" checked style="accent-color: var(--gold-primary);">
+              <span>Enable Music</span>
+            </label>
+            <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+              <input type="checkbox" id="newWedLiveStreamEnabled" style="accent-color: var(--gold-primary);">
+              <span>Enable Live Stream</span>
+            </label>
+          </div>
+
+          <button type="submit" class="btn-open-invitation" style="width: 100%; border-radius: 8px; padding: 14px;">
+            SAVE & PUBLISH INVITATION
+          </button>
+        </form>
+      </div>
+    </section>
+
+    <!-- 4. TEMPLATES VIEW -->
+    <section id="viewTemplates" class="admin-view-panel">
+      <div class="admin-table-card">
+        <h2 class="admin-table-title" style="margin-bottom: 8px;">NEO DIGITAL STUDIO TEMPLATE SUITE</h2>
+        <p style="color: var(--text-cream-muted); font-size: 0.95rem;">Select any template to apply to client invitations. The template engine dynamically adapts styles without changing client data.</p>
+        <div id="templatesGalleryGrid" class="templates-grid"></div>
+      </div>
+    </section>
+
+    <!-- 5. RSVPS MASTER VIEW -->
+    <section id="viewRSVPs" class="admin-view-panel">
+      <div class="admin-table-card">
+        <div class="admin-table-header">
+          <div>
+            <h2 class="admin-table-title">GUEST RSVPS LOG</h2>
+            <p style="color: var(--text-cream-muted); font-size: 0.85rem;">Private guest submissions. Not publicly visible.</p>
+          </div>
+          <div style="display: flex; gap: 12px;">
+            <select id="rsvpFilterWedding" class="admin-form-input" style="width: auto; padding: 6px 14px;">
+              <option value="">All Weddings</option>
+            </select>
+            <button id="btnExportRsvpsCsv" class="btn-event-directions">EXPORT CSV</button>
+          </div>
+        </div>
+        <table class="admin-data-table">
+          <thead>
+            <tr>
+              <th>Guest Name</th>
+              <th>Wedding</th>
+              <th>Status</th>
+              <th>Message / Blessings</th>
+              <th>Submitted</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody id="masterRsvpTbody"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- 6. SETTINGS VIEW -->
+    <section id="viewSettings" class="admin-view-panel">
+      <div class="admin-table-card" style="max-width: 680px; margin: 0 auto;">
+        <h2 class="admin-table-title" style="margin-bottom: 24px;">STUDIO & SUPABASE CONFIGURATION</h2>
+        <div class="admin-form-group">
+          <label>Studio Brand Name</label>
+          <input type="text" id="settingsStudioName" class="admin-form-input" value="Neo Digital Studio">
+        </div>
+        <div class="admin-form-group">
+          <label>Studio Master PIN (Admin Password)</label>
+          <input type="password" id="settingsAdminPin" class="admin-form-input" value="neo2026">
+        </div>
+        <div class="admin-form-group">
+          <label>Supabase Project URL (Optional - For Cloud Sync)</label>
+          <input type="text" id="settingsSupabaseUrl" class="admin-form-input" placeholder="https://your-project.supabase.co">
+        </div>
+        <div class="admin-form-group">
+          <label>Supabase Anon Key (Optional)</label>
+          <input type="password" id="settingsSupabaseKey" class="admin-form-input" placeholder="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...">
+        </div>
+        <button id="btnSaveStudioSettings" class="btn-event-directions" style="margin-top: 10px;">
+          SAVE STUDIO SETTINGS
+        </button>
+      </div>
+
+
+    </section>
+  </main>
+
+  <!-- Database & Admin Logic Scripts -->
+  <script src="data/weddingData.js"></script>
+  <script src="js/db.js"></script>
+  <script>
+    // --- ADMIN APPLICATION LOGIC ---
+    document.addEventListener('DOMContentLoaded', () => {
+      const authOverlay = document.getElementById('adminAuthOverlay');
+      const pinInput = document.getElementById('adminPinInput');
+      const loginBtn = document.getElementById('btnAdminLogin');
+      const logoutBtn = document.getElementById('btnAdminLogout');
+      const errorMsg = document.getElementById('authErrorMsg');
+
+      // Check Session
+      if (NeoDB.isAdminAuthenticated()) {
+        authOverlay.style.display = 'none';
+        loadDashboard();
+      }
+
+      function attemptLogin() {
+        const pin = pinInput.value;
+        if (NeoDB.verifyAdminPin(pin)) {
+          authOverlay.style.display = 'none';
+          loadDashboard();
+        } else {
+          errorMsg.innerText = 'Invalid Master PIN. Default is neo2026';
+          errorMsg.style.display = 'block';
+        }
+      }
+
+      loginBtn.addEventListener('click', attemptLogin);
+      pinInput.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') attemptLogin();
+      });
+
+      logoutBtn.addEventListener('click', () => {
+        NeoDB.adminLogout();
+        window.location.reload();
+      });
+
+      // Navigation
+      document.querySelectorAll('.admin-nav-link[data-view]').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          document.querySelectorAll('.admin-nav-link').forEach((b) => b.classList.remove('active'));
+          btn.classList.add('active');
+
+          const targetView = btn.getAttribute('data-view');
+          document.querySelectorAll('.admin-view-panel').forEach((p) => {
+            p.classList.remove('active');
+            if (p.id === targetView) p.classList.add('active');
+          });
+
+          if (targetView === 'viewOverview' || targetView === 'viewInvitations' || targetView === 'viewRSVPs') {
+            loadDashboard();
+          }
+        });
+      });
+
+      // Create Wedding Form Submit
+      const createForm = document.getElementById('createWeddingForm');
+      if (createForm) {
+        createForm.addEventListener('submit', (e) => {
+          e.preventDefault();
+          const slug = document.getElementById('newWedSlug').value.trim().toLowerCase().replace(/[^a-z0-9-]/g, '-');
+          const groom = document.getElementById('newWedGroomName').value.trim();
+          const bride = document.getElementById('newWedBrideName').value.trim();
+          const templateId = document.getElementById('newWedTemplate').value;
+
+          const newPayload = {
+            id: 'wed-' + Date.now(),
+            slug: slug,
+            templateId: templateId,
+            title: `The Wedding Celebration of ${groom} & ${bride}`,
+            status: 'published',
+            isPublished: true,
+            viewCount: 0,
+            musicEnabled: document.getElementById('newWedMusicEnabled').checked,
+            musicUrl: 'assets/wedding_music.mp3',
+            liveStreamEnabled: document.getElementById('newWedLiveStreamEnabled').checked,
+            liveStreamUrl: '',
+            rsvpEnabled: document.getElementById('newWedRsvpEnabled').checked,
+            weddingHashtag: document.getElementById('newWedHashtag').value || `#${groom}${bride}Wedding`,
+            data: {
+              ...window.weddingDataDefault,
+              invitation: {
+                eyebrow: "THE WEDDING CELEBRATION",
+                coupleDisplay: `${groom} & ${bride}`,
+                date: document.getElementById('newWedDateDisplay').value,
+                time: "10:30 AM IST",
+                eventDateTimeISO: document.getElementById('newWedDateTimeISO').value,
+                verse: "Together with our families, we joyfully invite you to celebrate our union.",
+                subheading: "Two families, many traditions, one timeless celebration."
+              },
+              couple: {
+                groom: {
+                  name: groom,
+                  fullName: groom,
+                  relationTitle: "SON OF",
+                  parents: document.getElementById('newWedGroomParents').value || "Parents",
+                  photo: "assets/groom.jpg",
+                  familyCity: "New Delhi"
+                },
+                bride: {
+                  name: bride,
+                  fullName: bride,
+                  relationTitle: "DAUGHTER OF",
+                  parents: document.getElementById('newWedBrideParents').value || "Parents",
+                  photo: "assets/bride.jpg",
+                  familyCity: "Mumbai"
+                }
+              }
+            }
+          };
+
+          NeoDB.saveWedding(newPayload);
+          alert(`Invitation created successfully! Public URL: index.html?wedding=${slug}`);
+          document.querySelector('[data-view=viewInvitations]').click();
+        });
+      }
+
+      // Settings Save
+      const saveSettingsBtn = document.getElementById('btnSaveStudioSettings');
+      if (saveSettingsBtn) {
+        saveSettingsBtn.addEventListener('click', () => {
+          NeoDB.saveSettings({
+            studioName: document.getElementById('settingsStudioName').value,
+            adminPin: document.getElementById('settingsAdminPin').value,
+            supabaseUrl: document.getElementById('settingsSupabaseUrl').value,
+            supabaseAnonKey: document.getElementById('settingsSupabaseKey').value
+          });
+          alert('Studio settings updated!');
+        });
+      }
+
+
+
+      // CSV Export
+      const exportCsvBtn = document.getElementById('btnExportRsvpsCsv');
+      if (exportCsvBtn) {
+        exportCsvBtn.addEventListener('click', () => {
+          const rsvps = NeoDB.getAllRSVPs();
+          let csv = 'ID,Wedding Slug,Guest Name,Status,Message,Submitted At\r\n';
+          rsvps.forEach((r) => {
+            csv += `"${r.id}","${r.weddingSlug}","${r.guestName}","${r.status}","${(r.message || '').replace(/"/g, '""')}","${r.createdAt}"\r\n`;
+          });
+          const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+          const link = document.createElement('a');
+          link.href = URL.createObjectURL(blob);
+          link.download = `Neo_Studio_RSVP_Export_${Date.now()}.csv`;
+          link.click();
+        });
+      }
+    });
+
+    function loadDashboard() {
+      const weddings = NeoDB.getAllWeddings();
+      const rsvps = NeoDB.getAllRSVPs();
+      const templates = NeoDB.getTemplates();
+
+      // 1. Stats
+      const totalViews = weddings.reduce((acc, w) => acc + (w.viewCount || 0), 0);
+      const accepted = rsvps.filter((r) => r.status === 'accepted').length;
+      const declined = rsvps.filter((r) => r.status === 'declined').length;
+
+      document.getElementById('statTotalWeddings').innerText = weddings.length;
+      document.getElementById('statTotalViews').innerText = totalViews;
+      document.getElementById('statTotalRSVPs').innerText = rsvps.length;
+      document.getElementById('statAcceptedRSVPs').innerText = accepted;
+      document.getElementById('statDeclinedRSVPs').innerText = declined;
+
+      // 2. Recent RSVPs in Overview
+      const overviewTbody = document.getElementById('overviewRecentRsvpTbody');
+      if (overviewTbody) {
+        overviewTbody.innerHTML = '';
+        rsvps.slice(0, 5).forEach((r) => {
+          const tr = document.createElement('tr');
+          tr.innerHTML = `
+            <td><strong>${r.guestName}</strong></td>
+            <td><code>${r.weddingSlug}</code></td>
+            <td><span class="badge-status ${r.status === 'accepted' ? 'badge-accepted' : 'badge-declined'}">${r.status}</span></td>
+            <td>${r.message || '—'}</td>
+            <td>${new Date(r.createdAt).toLocaleDateString()}</td>
+          `;
+          overviewTbody.appendChild(tr);
+        });
+      }
+
+      // 3. Invitations List
+      const invTbody = document.getElementById('invitationsListTbody');
+      if (invTbody) {
+        invTbody.innerHTML = '';
+        weddings.forEach((w) => {
+          const coupleText = (w.data && w.data.couple) 
+            ? `${w.data.couple.groom.name} & ${w.data.couple.bride.name}` 
+            : w.title;
+
+          const tr = document.createElement('tr');
+          tr.innerHTML = `
+            <td>
+              <strong>${coupleText}</strong>
+              <div style="font-size: 0.78rem; color: var(--gold-light);">${w.weddingHashtag || ''}</div>
+            </td>
+            <td>
+              <a href="index.html?wedding=${w.slug}" target="_blank" style="color: var(--gold-bright); text-decoration: underline;">
+                /wedding/${w.slug}
+              </a>
+            </td>
+            <td><span style="font-size: 0.82rem; text-transform: uppercase;">${w.templateId || 'royal-red'}</span></td>
+            <td>${(w.data && w.data.invitation && w.data.invitation.date) || '—'}</td>
+            <td>${w.viewCount || 0}</td>
+            <td><span class="badge-status badge-accepted">${w.status || 'published'}</span></td>
+            <td>
+              <div style="display: flex; gap: 8px;">
+                <a href="index.html?wedding=${w.slug}" target="_blank" class="admin-small-btn" style="text-decoration: none;">View</a>
+                <button class="admin-small-btn btn-delete js-delete-wed" data-id="${w.id}">Delete</button>
+              </div>
+            </td>
+          `;
+          invTbody.appendChild(tr);
+        });
+
+        invTbody.querySelectorAll('.js-delete-wed').forEach((btn) => {
+          btn.addEventListener('click', () => {
+            const id = btn.getAttribute('data-id');
+            if (confirm('Delete this wedding invitation?')) {
+              NeoDB.deleteWedding(id);
+              loadDashboard();
+            }
+          });
+        });
+      }
+
+      // 4. Templates Grid
+      const tGrid = document.getElementById('templatesGalleryGrid');
+      if (tGrid) {
+        tGrid.innerHTML = '';
+        templates.forEach((t) => {
+          const card = document.createElement('div');
+          card.className = 'template-card';
+          card.innerHTML = `
+            <div class="template-swatch" style="background: ${t.cardGradient}; border-color: ${t.goldAccent};"></div>
+            <h3 style="font-family: var(--font-serif-sub); font-size: 1.05rem; color: var(--gold-light); margin-bottom: 6px;">${t.name}</h3>
+            <p style="font-family: var(--font-body); font-size: 0.88rem; color: var(--text-cream-muted); line-height: 1.5;">${t.description}</p>
+          `;
+          tGrid.appendChild(card);
+        });
+      }
+
+      // 5. Master RSVPs
+      const masterTbody = document.getElementById('masterRsvpTbody');
+      const rsvpFilter = document.getElementById('rsvpFilterWedding');
+
+      if (rsvpFilter) {
+        rsvpFilter.innerHTML = '<option value="">All Weddings</option>';
+        weddings.forEach((w) => {
+          const opt = document.createElement('option');
+          opt.value = w.slug;
+          opt.innerText = w.slug;
+          rsvpFilter.appendChild(opt);
+        });
+
+        rsvpFilter.onchange = () => renderMasterRSVPs(rsvpFilter.value);
+      }
+
+      function renderMasterRSVPs(filterSlug) {
+        if (!masterTbody) return;
+        masterTbody.innerHTML = '';
+        const filtered = NeoDB.getRSVPsByWedding(filterSlug);
+
+        filtered.forEach((r) => {
+          const tr = document.createElement('tr');
+          tr.innerHTML = `
+            <td><strong>${r.guestName}</strong></td>
+            <td><code>${r.weddingSlug}</code></td>
+            <td><span class="badge-status ${r.status === 'accepted' ? 'badge-accepted' : 'badge-declined'}">${r.status}</span></td>
+            <td>${r.message || '—'}</td>
+            <td>${new Date(r.createdAt).toLocaleString()}</td>
+            <td>
+              <button class="admin-small-btn btn-delete js-del-rsvp" data-id="${r.id}">Remove</button>
+            </td>
+          `;
+          masterTbody.appendChild(tr);
+        });
+
+        masterTbody.querySelectorAll('.js-del-rsvp').forEach((btn) => {
+          btn.addEventListener('click', () => {
+            const id = btn.getAttribute('data-id');
+            NeoDB.deleteRSVP(id);
+            renderMasterRSVPs(rsvpFilter.value);
+            loadDashboard();
+          });
+        });
+      }
+
+      renderMasterRSVPs('');
+    }
+  </script>
+</body>
+</html>
