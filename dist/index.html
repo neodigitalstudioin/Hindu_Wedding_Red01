@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Siddharth & Kiara | The Royal Wedding Celebration</title>
+  <meta name="description" content="A luxury cinematic Indian digital wedding invitation for Siddharth & Kiara.">
+
+  <!-- Sacred Emblem Favicon -->
+  <link rel="icon" type="image/png" href="/assets/ganapathi-C4Ka0kOK.png">
+
+  <!-- Luxury Stylesheet -->
+  <script type="module" crossorigin src="/assets/index-Cp8JG7h1.js"></script>
+  <link rel="stylesheet" crossorigin href="/assets/index-D9KeBdC4.css">
+</head>
+
+<body>
+  <!-- Native Declarative Background Wedding Music -->
+  <audio id="weddingBgAudio" src="/assets/wedding_music-BheC2T8_.mp3" preload="auto" loop playsinline autoplay></audio>
+
+  <!-- Ambient Background: Canvas Petals & Royal Mandala Line-art Texture -->
+  <div class="bg-mandala-texture" aria-hidden="true"></div>
+  <canvas id="petalsCanvas" class="bg-mandala-canvas" aria-hidden="true"></canvas>
+  <div class="vignette-overlay" aria-hidden="true"></div>
+
+  <!-- FLOATING TOP BAR: Sacred Monogram & Discreet Music Controller -->
+  <header class="floating-top-bar">
+    <div class="studio-pill">
+      <span class="dot"></span>
+      <span>Siddharth & Kiara</span>
+    </div>
+
+    <button id="audioToggleBtn" class="audio-control-btn" aria-label="Toggle Wedding Music">
+      <div class="audio-equalizer">
+        <span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
+      </div>
+      <span class="audio-text">MUSIC ON</span>
+    </button>
+  </header>
+
+  <!-- ======================================================================
+       1. OPENING / COVER SCREEN (FULLSCREEN CINEMATIC EXPERIENCE)
+       ====================================================================== -->
+  <div id="coverScreen" class="cover-screen" role="dialog" aria-modal="true" aria-label="Wedding Invitation Envelope">
+    <!-- Royal Velvet Gates -->
+    <div class="cover-gate-left" aria-hidden="true"></div>
+    <div class="cover-gate-right" aria-hidden="true"></div>
+
+    <!-- Center Envelope Card -->
+    <div class="cover-card-container">
+      <div class="cover-card-inner-frame">
+        <!-- Corner Filigree Ornaments -->
+        <svg class="corner-ornament top-left" viewBox="0 0 24 24" fill="none" stroke="#d4af37" stroke-width="1.2">
+          <path d="M2 18V2H18" />
+          <circle cx="6" cy="6" r="2" fill="#d4af37" />
+        </svg>
+        <svg class="corner-ornament top-right" viewBox="0 0 24 24" fill="none" stroke="#d4af37" stroke-width="1.2">
+          <path d="M22 18V2H6" />
+          <circle cx="18" cy="6" r="2" fill="#d4af37" />
+        </svg>
+        <svg class="corner-ornament bottom-left" viewBox="0 0 24 24" fill="none" stroke="#d4af37" stroke-width="1.2">
+          <path d="M2 6V22H18" />
+          <circle cx="6" cy="18" r="2" fill="#d4af37" />
+        </svg>
+        <svg class="corner-ornament bottom-right" viewBox="0 0 24 24" fill="none" stroke="#d4af37" stroke-width="1.2">
+          <path d="M22 6V22H6" />
+          <circle cx="18" cy="18" r="2" fill="#d4af37" />
+        </svg>
+      </div>
+
+      <!-- Sacred Ganapathi PNG at upper/central area -->
+      <div class="sacred-ganapathi-wrapper">
+        <div class="sacred-ganapathi-glow"></div>
+        <img src="/assets/ganapathi-C4Ka0kOK.png" alt="Sacred Lord Ganapathi" class="sacred-ganapathi-img js-ganapathi-img">
+      </div>
+
+      <!-- Sacred Sanskrit Invocation -->
+      <p class="sanskrit-shloka">॥ श्री गणेशाय नमः ॥</p>
+
+      <!-- Elegant Gold Ornamental Divider -->
+      <div class="gold-divider">
+        <span class="divider-line"></span>
+        <span class="divider-knot"></span>
+        <span class="divider-line"></span>
+      </div>
+
+      <!-- Eyebrow text -->
+      <h2 class="eyebrow-text">THE WEDDING CELEBRATION</h2>
+
+      <!-- Couple names in premium wedding script font -->
+      <h1 class="script-couple-name js-couple-name">
+        Siddharth <span class="ampersand">&</span> Kiara
+      </h1>
+
+      <!-- Wedding date and time -->
+      <p class="wedding-datetime">Monday, October 12, 2026 · 10:30 AM</p>
+
+      <!-- Short invitation message -->
+      <p class="cover-invitation-message">
+        “Together with our families, we joyfully invite you to celebrate our union.”
+      </p>
+
+      <!-- Elegant gold decorative divider -->
+      <div class="gold-divider" style="margin-bottom: 28px;">
+        <span class="divider-line"></span>
+        <span class="divider-knot"></span>
+        <span class="divider-line"></span>
+      </div>
+
+
+      <!-- Primary CTA: OPEN INVITATION -->
+      <button id="btnOpenInvitation" class="btn-open-invitation" aria-label="Open Wedding Invitation">
+        <svg class="seal-icon" viewBox="0 0 24 24">
+          <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.5" fill="none" />
+          <path d="M12 6L14 10L18.5 10.5L15 14L16 18.5L12 16L8 18.5L9 14L5.5 10.5L10 10L12 6Z" fill="currentColor" />
+        </svg>
+        <span>OPEN INVITATION</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- ======================================================================
+       MAIN INVITATION WRAPPER
+       ====================================================================== -->
+  <main class="main-invitation-wrapper">
+
+    <!-- 2. HERO / MAIN INVITATION -->
+    <section id="heroSection" class="luxury-section hero-section">
+      <!-- Sacred Ganapathi Emblem near top with subtle golden glow -->
+      <div class="hero-sacred-emblem-wrap reveal-on-scroll">
+        <div class="sacred-ganapathi-glow"></div>
+        <img src="/assets/ganapathi-C4Ka0kOK.png" alt="Sacred Lord Ganapathi Emblem"
+          class="hero-sacred-emblem-img js-ganapathi-img">
+      </div>
+
+      <p class="hero-shloka reveal-on-scroll delay-1">॥ श्री गणेशाय नमः ॥</p>
+
+      <div class="gold-divider reveal-on-scroll delay-1">
+        <span class="divider-line"></span>
+        <span class="divider-knot"></span>
+        <span class="divider-line"></span>
+      </div>
+
+      <h2 class="hero-eyebrow reveal-on-scroll delay-1">THE WEDDING CELEBRATION</h2>
+
+      <h1 class="hero-couple-title js-couple-name reveal-on-scroll delay-2">
+        Siddharth <span class="amp">&</span> Kiara
+      </h1>
+
+      <p class="hero-wedding-date reveal-on-scroll delay-2">
+        Monday, October 12, 2026 · 10:30 AM
+      </p>
+
+      <p class="hero-invitation-verse reveal-on-scroll delay-3">
+        “Together with our families, we joyfully invite you<br>
+        to celebrate our union.”
+      </p>
+
+      <!-- Sacred Lotus Ornament -->
+      <div class="sacred-lotus-ornament reveal-on-scroll delay-3">
+        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+          <path d="M50 20 C42 35 30 52 30 65 C30 76 38 82 50 82 C62 82 70 76 70 65 C70 52 58 35 50 20 Z"
+            opacity="0.95" />
+          <path
+            d="M50 35 C40 45 22 55 18 68 C15 78 22 84 32 84 C42 84 48 76 50 68 C52 76 58 84 68 84 C78 84 85 78 82 68 C78 55 60 45 50 35 Z"
+            opacity="0.75" />
+          <circle cx="50" cy="85" r="3" fill="#ffd966" />
+        </svg>
+      </div>
+
+      <!-- Quick Countdown in Hero -->
+      <div class="countdown-container reveal-on-scroll delay-3">
+        <div class="countdown-box">
+          <span id="countDays" class="countdown-number">00</span>
+          <span class="countdown-label">DAYS</span>
+        </div>
+        <div class="countdown-box">
+          <span id="countHours" class="countdown-number">00</span>
+          <span class="countdown-label">HOURS</span>
+        </div>
+        <div class="countdown-box">
+          <span id="countMins" class="countdown-number">00</span>
+          <span class="countdown-label">MINUTES</span>
+        </div>
+        <div class="countdown-box">
+          <span id="countSecs" class="countdown-number">00</span>
+          <span class="countdown-label">SECONDS</span>
+        </div>
+      </div>
+
+      <!-- Scroll to Explore -->
+      <div id="scrollDownIndicator" class="scroll-indicator-wrap reveal-on-scroll delay-3" role="button"
+        aria-label="Scroll to explore invitation">
+        <span class="scroll-indicator-text">SCROLL TO EXPLORE</span>
+        <svg class="scroll-chevron-down" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"
+          stroke-linejoin="round">
+          <polyline points="6 9 12 15 18 9"></polyline>
+        </svg>
+      </div>
+    </section>
+
+    <!-- 3. THE COUPLE SECTION -->
+    <section id="coupleSection" class="luxury-section couple-section">
+      <div class="section-header reveal-on-scroll">
+        <p class="section-eyebrow">MEET THE NEWLYWEDS</p>
+        <h2 class="section-title">THE COUPLE</h2>
+        <div class="gold-divider">
+          <span class="divider-line"></span>
+          <span class="divider-knot"></span>
+          <span class="divider-line"></span>
+        </div>
+        <p class="section-subtitle">
+          “Two families, many traditions, one timeless celebration.”
+        </p>
+      </div>
+
+      <div class="couple-cards-grid">
+        <!-- GROOM CARD -->
+        <article class="couple-card reveal-on-scroll delay-1">
+          <div class="royal-arch-frame-wrapper">
+            <div class="royal-arch-outer"></div>
+            <div class="arch-keystone">
+              <svg viewBox="0 0 24 24">
+                <path d="M12 2L15 8H9L12 2Z" />
+                <circle cx="12" cy="14" r="4" />
+              </svg>
+            </div>
+            <div class="royal-arch-photo-mask">
+              <img id="groomPhoto" src="/assets/groom-wf7Hrd2X.jpg" alt="Portrait of Groom Siddharth" class="couple-portrait-img">
+            </div>
+          </div>
+
+          <span class="couple-role-tag">THE GROOM</span>
+          <h3 id="groomName" class="couple-person-name">Siddharth</h3>
+
+          <div class="gold-divider" style="max-width: 140px; margin: 10px auto 14px;">
+            <span class="divider-line"></span>
+            <span class="divider-knot"></span>
+            <span class="divider-line"></span>
+          </div>
+
+          <span id="groomRelation" class="couple-relation-label">SON OF</span>
+          <p id="groomParents" class="couple-parents-names">Mrs. Sunita & Mr. Rajesh Malhotra</p>
+          <span id="groomCity" class="couple-family-origin">New Delhi, India</span>
+        </article>
+
+        <!-- Center Sacred Union Medallion -->
+        <div class="couple-union-connector" aria-hidden="true">
+          <svg viewBox="0 0 24 24">
+            <path
+              d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+          </svg>
+        </div>
+
+        <!-- BRIDE CARD -->
+        <article class="couple-card reveal-on-scroll delay-2">
+          <div class="royal-arch-frame-wrapper">
+            <div class="royal-arch-outer"></div>
+            <div class="arch-keystone">
+              <svg viewBox="0 0 24 24">
+                <path d="M12 2L15 8H9L12 2Z" />
+                <circle cx="12" cy="14" r="4" />
+              </svg>
+            </div>
+            <div class="royal-arch-photo-mask">
+              <img id="bridePhoto" src="/assets/bride-DdlQGXlw.jpg" alt="Portrait of Bride Kiara" class="couple-portrait-img">
+            </div>
+          </div>
+
+          <span class="couple-role-tag">THE BRIDE</span>
+          <h3 id="brideName" class="couple-person-name">Kiara</h3>
+
+          <div class="gold-divider" style="max-width: 140px; margin: 10px auto 14px;">
+            <span class="divider-line"></span>
+            <span class="divider-knot"></span>
+            <span class="divider-line"></span>
+          </div>
+
+          <span id="brideRelation" class="couple-relation-label">DAUGHTER OF</span>
+          <p id="brideParents" class="couple-parents-names">Mrs. Poonam & Mr. Anand Kapoor</p>
+          <span id="brideCity" class="couple-family-origin">Mumbai, India</span>
+        </article>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         4. WEDDING EVENTS / CELEBRATION SCHEDULE
+         ====================================================================== -->
+    <section id="eventsSection" class="luxury-section schedule-section">
+      <div class="section-header reveal-on-scroll">
+        <p id="eventsEyebrow" class="section-eyebrow">WEDDING EVENTS</p>
+        <h2 id="eventsTitle" class="section-title">CELEBRATION SCHEDULE</h2>
+        <div class="gold-divider">
+          <span class="divider-line"></span>
+          <span class="divider-knot"></span>
+          <span class="divider-line"></span>
+        </div>
+        <p id="eventsSubtitle" class="section-subtitle">
+          “Every ritual, every moment — beautifully planned for family and friends.”
+        </p>
+      </div>
+
+      <!-- Dynamic Event Cards Container -->
+      <div id="eventsScheduleGrid" class="events-schedule-grid">
+        <!-- Rendered dynamically by JS from weddingData.eventsSection.events -->
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         5. COUNTDOWN SECTION (SACRED MUHURAT)
+         ====================================================================== -->
+    <section id="muhuratSection" class="luxury-section muhurat-countdown-section">
+      <div class="countdown-wrapper-card reveal-on-scroll">
+        <p class="section-eyebrow">SACRED MUHURAT</p>
+        <h2 class="section-title" style="font-size: clamp(2.2rem, 4.5vw, 3rem);">COUNTDOWN TO THE BIG DAY</h2>
+
+        <div class="gold-divider">
+          <span class="divider-line"></span>
+          <span class="divider-knot"></span>
+          <span class="divider-line"></span>
+        </div>
+
+        <p class="section-subtitle">
+          “The auspicious moment is getting closer.”
+        </p>
+
+        <!-- Live Countdown Boxes -->
+        <div id="muhuratLiveBoxes" class="muhurat-live-boxes">
+          <div class="muhurat-timer-box">
+            <span id="muhuratDays" class="muhurat-digit">00</span>
+            <span class="muhurat-unit">DAYS</span>
+          </div>
+          <div class="muhurat-timer-box">
+            <span id="muhuratHours" class="muhurat-digit">00</span>
+            <span class="muhurat-unit">HOURS</span>
+          </div>
+          <div class="muhurat-timer-box">
+            <span id="muhuratMinutes" class="muhurat-digit">00</span>
+            <span class="muhurat-unit">MINUTES</span>
+          </div>
+          <div class="muhurat-timer-box">
+            <span id="muhuratSeconds" class="muhurat-digit">00</span>
+            <span class="muhurat-unit">SECONDS</span>
+          </div>
+        </div>
+
+        <!-- Replaced message when countdown reaches 0 -->
+        <div id="muhuratCompletedBanner" class="muhurat-completed-banner">
+          THE DAY HAS ARRIVED
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         6. PHOTO GALLERY (CAPTURED CHAPTERS)
+         ====================================================================== -->
+    <section id="gallerySection" class="luxury-section gallery-section">
+      <div class="section-header reveal-on-scroll">
+        <p id="galleryEyebrow" class="section-eyebrow">CAPTURED CHAPTERS</p>
+        <h2 id="galleryTitle" class="section-title">MEMORIES IN BLOOM</h2>
+        <div class="gold-divider">
+          <span class="divider-line"></span>
+          <span class="divider-knot"></span>
+          <span class="divider-line"></span>
+        </div>
+        <p id="gallerySubtitle" class="section-subtitle">
+          “A glimpse of moments leading to our celebration.”
+        </p>
+      </div>
+
+      <!-- Responsive 2-column on mobile, dynamic grid on desktop -->
+      <div id="galleryGrid" class="gallery-grid">
+        <!-- Rendered dynamically by JS from weddingData.gallery.photos -->
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         7. OUR STORY (A SPECIAL GLIMPSE)
+         ====================================================================== -->
+    <section id="storySection" class="luxury-section story-section">
+      <div class="section-header reveal-on-scroll">
+        <p id="storyEyebrow" class="section-eyebrow">OUR STORY</p>
+        <h2 id="storyTitle" class="section-title">A SPECIAL GLIMPSE</h2>
+        <div class="gold-divider">
+          <span class="divider-line"></span>
+          <span class="divider-knot"></span>
+          <span class="divider-line"></span>
+        </div>
+        <p id="storySubtitle" class="section-subtitle">
+          “A special glimpse of the moments that led us here.”
+        </p>
+      </div>
+
+      <div id="storyTimelineTrack" class="story-timeline-track">
+        <!-- Rendered dynamically by JS from weddingData.story.timeline -->
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         8. VENUE & TRAVEL (EVENT SPECIFIC + TRAVEL NOTES)
+         ====================================================================== -->
+    <section id="venueTravelSection" class="luxury-section venue-travel-section">
+      <div class="section-header reveal-on-scroll">
+        <p id="venueEyebrow" class="section-eyebrow">VENUE GUIDE</p>
+        <h2 id="venueTitle" class="section-title">VENUE & TRAVEL</h2>
+        <div class="gold-divider">
+          <span class="divider-line"></span>
+          <span class="divider-knot"></span>
+          <span class="divider-line"></span>
+        </div>
+        <p id="venueSubtitle" class="section-subtitle">
+          “Save the date and arrive with ease.”
+        </p>
+      </div>
+
+      <!-- Venue Cards Grid -->
+      <div id="venuesGrid" class="venues-grid">
+        <!-- Rendered dynamically by JS from weddingData.venueAndTravel.venues -->
+      </div>
+
+      <!-- Travel Notes Card -->
+      <div class="travel-notes-card reveal-on-scroll delay-1">
+        <div class="travel-notes-header">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#d4af37" stroke-width="2">
+            <circle cx="12" cy="12" r="10" />
+            <line x1="12" y1="16" x2="12" y2="12" />
+            <line x1="12" y1="8" x2="12.01" y2="8" />
+          </svg>
+          <h3>TRAVEL NOTES</h3>
+        </div>
+        <ul id="travelNotesList" class="travel-notes-list">
+          <!-- Rendered dynamically by JS from weddingData.venueAndTravel.travelNotes -->
+        </ul>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         9. LIVE STREAM (OPTIONAL / AUTO-HIDDEN IF EMPTY)
+         ====================================================================== -->
+    <section id="liveStreamSection" class="luxury-section livestream-section" style="display: none;">
+      <div class="livestream-card reveal-on-scroll">
+        <div class="livestream-pulsing-badge">
+          <span class="pulse-red-dot"></span>
+          <span id="liveStreamBadge">🔴 LIVE STREAM</span>
+        </div>
+
+        <h2 id="liveStreamTitle" class="livestream-title">WATCH LIVE</h2>
+
+        <div class="gold-divider">
+          <span class="divider-line"></span>
+          <span class="divider-knot"></span>
+          <span class="divider-line"></span>
+        </div>
+
+        <p id="liveStreamSubtitle" class="livestream-subtitle">
+          “Can't make it in person? Join us virtually as we celebrate this beautiful moment together.”
+        </p>
+
+        <a id="btnJoinLiveStream" href="#" target="_blank" rel="noopener noreferrer" class="btn-livestream-join">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+            <path
+              d="M10 16.5l6-4.5-6-4.5v9zM12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z" />
+          </svg>
+          <span id="liveStreamBtnText">JOIN LIVE STREAM</span>
+        </a>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         10. RSVP SECTION
+         ====================================================================== -->
+    <section id="rsvpSection" class="luxury-section rsvp-section">
+      <div class="rsvp-card-wrapper reveal-on-scroll">
+        <p class="section-eyebrow">JOIN THE CELEBRATION</p>
+        <h2 class="section-title">RSVP & SHARE</h2>
+
+        <div class="gold-divider">
+          <span class="divider-line"></span>
+          <span class="divider-knot"></span>
+          <span class="divider-line"></span>
+        </div>
+
+        <p class="section-subtitle">
+          “We would be honored to celebrate this day with you.”
+        </p>
+
+        <!-- Attendance Choice Toggle -->
+        <div class="rsvp-status-toggle">
+          <button type="button" id="btnRsvpAccept" class="btn-rsvp-choice active" data-status="accepted">
+            Joyfully Accept
+          </button>
+          <button type="button" id="btnRsvpDecline" class="btn-rsvp-choice" data-status="declined">
+            Regretfully Decline
+          </button>
+        </div>
+
+        <!-- Form Inputs -->
+        <form id="rsvpForm" class="rsvp-form-grid">
+          <div class="admin-form-group" style="margin-bottom: 0;">
+            <label for="rsvpGuestName">YOUR NAME</label>
+            <input type="text" id="rsvpGuestName" class="rsvp-input-field" placeholder="Enter your full name" required>
+          </div>
+
+          <div class="admin-form-group" style="margin-bottom: 0;">
+            <label for="rsvpMessage">MESSAGE & BLESSINGS</label>
+            <textarea id="rsvpMessage" class="rsvp-textarea-field"
+              placeholder="Share your heartfelt blessings for the couple..."></textarea>
+          </div>
+
+          <button type="submit" id="btnSubmitRsvp" class="btn-send-rsvp">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z" />
+            </svg>
+            <span>SEND RSVP</span>
+          </button>
+        </form>
+
+        <!-- Success Confirmation Box -->
+        <div id="rsvpSuccessBox" class="rsvp-success-message">
+          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#d4af37" stroke-width="2"
+            style="margin: 0 auto 10px;">
+            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+            <polyline points="22 4 12 14.01 9 11.01" />
+          </svg>
+          <h4 id="rsvpSuccessTitle">BLESSINGS RECEIVED WITH GRATITUDE</h4>
+          <p id="rsvpSuccessText">Thank you! Your RSVP has been confirmed. We look forward to celebrating with you.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         11. SHARE INVITATION SECTION
+         ====================================================================== -->
+    <section id="shareSection" class="luxury-section share-section">
+      <div class="section-header reveal-on-scroll">
+        <p class="section-eyebrow">SPREAD THE JOY</p>
+        <h2 class="section-title">SHARE THIS INVITATION</h2>
+        <div class="gold-divider">
+          <span class="divider-line"></span>
+          <span class="divider-knot"></span>
+          <span class="divider-line"></span>
+        </div>
+        <p class="section-subtitle">
+          “Let your loved ones know about our special day.”
+        </p>
+      </div>
+
+      <div class="share-buttons-row reveal-on-scroll delay-1">
+        <!-- WhatsApp -->
+        <a id="btnShareWhatsApp" href="#" target="_blank" rel="noopener noreferrer"
+          class="btn-share-social btn-share-whatsapp">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+            <path
+              d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0 0 12.04 2zM12.05 20.2c-1.48 0-2.93-.4-4.2-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.204 8.204 0 0 1-1.26-4.38c0-4.54 3.7-8.24 8.25-8.24 2.2 0 4.27.86 5.82 2.42a8.18 8.18 0 0 1 2.41 5.83c0 4.54-3.7 8.23-8.23 8.23z" />
+          </svg>
+          <span>WhatsApp</span>
+        </a>
+
+        <!-- Add to Calendar -->
+        <button type="button" id="btnShareCalendar" class="btn-share-social">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
+            <line x1="16" y1="2" x2="16" y2="6" />
+            <line x1="8" y1="2" x2="8" y2="6" />
+            <line x1="3" y1="10" x2="21" y2="10" />
+          </svg>
+          <span>Add to Calendar</span>
+        </button>
+
+        <!-- Copy Link -->
+        <button type="button" id="btnShareCopyLink" class="btn-share-social">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+            <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+          </svg>
+          <span>Copy Link</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         12. FINAL THANK YOU SECTION (CINEMATIC CLOSING)
+         ====================================================================== -->
+    <section id="thankYouSection" class="thank-you-section" style="background-image: url('/assets/bride-DdlQGXlw.jpg');">
+      <div class="thank-you-overlay" aria-hidden="true"></div>
+
+      <div class="thank-you-content reveal-on-scroll">
+        <!-- Sacred Ganapathi Emblem -->
+        <div class="sacred-ganapathi-wrapper" style="margin-bottom: 12px;">
+          <img src="/assets/ganapathi-C4Ka0kOK.png" alt="Sacred Lord Ganapathi" class="sacred-ganapathi-img js-ganapathi-img"
+            style="width: 100px; max-height: 110px;">
+        </div>
+
+        <p class="thank-you-gratitude">WITH GRATITUDE</p>
+        <h2 id="thankYouCoupleName" class="thank-you-couple-name js-couple-name">Siddharth & Kiara</h2>
+        <p id="thankYouDate" class="thank-you-date">October 12, 2026</p>
+
+        <div class="gold-divider" style="max-width: 220px; margin: 14px auto 20px;">
+          <span class="divider-line"></span>
+          <span class="divider-knot"></span>
+          <span class="divider-line"></span>
+        </div>
+
+        <div id="thankYouHashtag" class="thank-you-hashtag">#SiddharthKiaraWedding</div>
+
+        <p class="thank-you-crafted-by">Together with our families &amp; loved ones</p>
+        <h3 class="thank-you-studio-title js-couple-name">Siddharth &amp; Kiara</h3>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         FOOTER & SACRED BLESSING
+         ====================================================================== -->
+    <footer class="luxury-footer">
+      <img src="/assets/ganapathi-C4Ka0kOK.png" alt="Sacred Lord Ganapathi" class="footer-emblem-img js-ganapathi-img">
+      <p class="footer-blessing-quote">
+        “May Lord Ganesha bestow divine blessings, prosperity, happiness and everlasting love upon the couple.”
+      </p>
+      <div class="gold-divider" style="max-width: 160px; margin: 18px auto 22px;">
+        <span class="divider-line"></span>
+        <span class="divider-knot"></span>
+        <span class="divider-line"></span>
+      </div>
+      <p class="footer-studio-credit">WITH LOVE &amp; BLESSINGS · SIDDHARTH &amp; KIARA</p>
+      <p class="footer-copyright">May your gracious presence be our greatest gift</p>
+    </footer>
+  </main>
+
+  <!-- TOAST NOTIFICATION -->
+  <div id="toastNotification" class="toast-notification" role="status" aria-live="polite"></div>
+
+  <!-- ======================================================================
+       LIGHTBOX MODAL FOR PHOTO GALLERY
+       ====================================================================== -->
+  <div id="lightboxModal" class="lightbox-modal" role="dialog" aria-modal="true" aria-label="Photo Lightbox">
+    <button id="lightboxBtnClose" class="lightbox-btn-close" aria-label="Close Lightbox">&times;</button>
+    <button id="lightboxBtnPrev" class="lightbox-nav-btn lightbox-btn-prev"
+      aria-label="Previous Photo">&#10094;</button>
+    <button id="lightboxBtnNext" class="lightbox-nav-btn lightbox-btn-next" aria-label="Next Photo">&#10095;</button>
+
+    <div class="lightbox-content-box">
+      <img id="lightboxImg" src="" alt="Gallery Preview" class="lightbox-img">
+      <div class="lightbox-meta">
+        <h4 id="lightboxTitle">Photo Title</h4>
+        <p id="lightboxCaption">Photo Caption</p>
+        <span id="lightboxCounter" class="lightbox-counter">01 / 06</span>
+      </div>
+    </div>
+  </div>
+  </div>
+  </div>
+  </div>
+
+</body>
+
+</html>
